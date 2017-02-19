@@ -91,7 +91,13 @@
                             <outletCollection property="gestureRecognizers" destination="r6N-sP-yFi" appends="YES" id="Dye-at-QXZ"/>
                         </connections>
                     </view>
-                    <navigationItem key="navigationItem" title="Tip Calculator" id="dBl-gg-ucm"/>
+                    <navigationItem key="navigationItem" title="Tip Calculator" id="dBl-gg-ucm">
+                        <barButtonItem key="rightBarButtonItem" title="Settings" id="Hoc-B6-35e">
+                            <connections>
+                                <segue destination="Ass-ge-mxJ" kind="push" id="LvP-wN-eVP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="billField" destination="Ht5-wK-LKu" id="Dt6-G6-ADN"/>
                         <outlet property="tipControl" destination="UjY-tU-w2e" id="3Fm-ha-LTB"/>
@@ -107,6 +113,46 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="860" y="138.98050974512745"/>
+        </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="AuL-oe-1cb">
+            <objects>
+                <viewController id="Ass-ge-mxJ" customClass="SettingsViewController" customModule="tippy" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="drp-pY-dEL"/>
+                        <viewControllerLayoutGuide type="bottom" id="p0u-Pg-CMl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NLK-U8-Bga">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="9g6-cK-rDK">
+                                <rect key="frame" x="38" y="127" width="298" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="18%"/>
+                                    <segment title="20%"/>
+                                    <segment title="25%"/>
+                                </segments>
+                                <connections>
+                                    <action selector="setDefaultTip:" destination="Ass-ge-mxJ" eventType="valueChanged" id="Eul-bu-wje"/>
+                                </connections>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Choose default tip:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2C-bQ-gTK">
+                                <rect key="frame" x="38" y="72" width="145" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Th2-33-ZhA"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6ha-WT-7eL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1582" y="152"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="PdG-Hg-GyH">
