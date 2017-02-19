@@ -26,8 +26,13 @@ class SettingsViewController: UIViewController {
     
 
     let tipPercetages = [0.18, 0.2, 0.25]
-    let defaultTip = tipPercetages[sender.selectedSegmentIndex]
-    print("Selected = \(defaultTip)")
+    let defaultPercentage = tipPercetages[sender.selectedSegmentIndex]
+    print("Selected Default % = \(defaultPercentage)")
+    
+    let defaults = UserDefaults.standard
+    //defaults.set("some_string_to_save", forKey: "some_key_that_you_choose")
+    defaults.set(defaultPercentage, forKey: "tippy_default_percentage")
+    defaults.synchronize()
     
   }
     /*

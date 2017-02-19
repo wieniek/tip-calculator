@@ -43,5 +43,42 @@ class ViewController: UIViewController {
     
   }
   
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    print("view will appear")
+    
+    let defaults = UserDefaults.standard
+    //let stringValue = defaults.object(forKey: "some_key_that_you_choose") as! String
+    
+    
+    let defaultPercentage = defaults.double(forKey: "tippy_default_percentage")
+    print("Default % from settings = \(defaultPercentage)")
+    
+    let tipPercetages = [0.18:0, 0.2:1, 0.25:2]
+    
+    if let segment = tipPercetages[defaultPercentage] {
+      
+      tipControl.selectedSegmentIndex = segment
+    }
+    
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    print("view did appear")
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    print("view will disappear")
+  }
+  
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    print("view did disappear")
+  }
+  
+  
 }
 
