@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class TipViewController: UIViewController {
   
   
   @IBOutlet weak var tipLabel: UILabel!
@@ -49,8 +49,7 @@ class ViewController: UIViewController {
     print("view will appear")
     
     let defaults = UserDefaults.standard
-    //let stringValue = defaults.object(forKey: "some_key_that_you_choose") as! String
-    
+
     
     let defaultPercentage = defaults.double(forKey: "tippy_default_percentage")
     print("Default % from settings = \(defaultPercentage)")
