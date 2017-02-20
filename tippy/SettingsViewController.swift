@@ -9,40 +9,87 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
     
-
+    // Do any additional setup after loading the view.
+  }
+  
+  override func didReceiveMemoryWarning() {
+    super.didReceiveMemoryWarning()
+    // Dispose of any resources that can be recreated.
+  }
+  
+  
+  @IBOutlet weak var tipSettingsControl: UISegmentedControl!
+  
+  
   @IBAction func setDefaultTip(_ sender: UISegmentedControl) {
     
-
-    let tipPercetages = [0.18, 0.2, 0.25]
-    let defaultPercentage = tipPercetages[sender.selectedSegmentIndex]
-    print("Selected Default % = \(defaultPercentage)")
+    let defaultTipIndex = sender.selectedSegmentIndex
+    print("\(defaultTipIndex)")
     
-    let defaults = UserDefaults.standard
-    //defaults.set("some_string_to_save", forKey: "some_key_that_you_choose")
-    defaults.set(defaultPercentage, forKey: "tippy_default_percentage")
-    defaults.synchronize()
     
   }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+  
+  
+  @IBAction func changeTipAmount(_ sender: UIButton) {
+    
+    let buttonTitle = sender.currentTitle
+    let selectedSegment = tipSettingsControl.selectedSegmentIndex
+    let title = tipSettingsControl.titleForSegment(at: selectedSegment)!
+    
+    let percent = Int(title.substring(to: title.index(before: title.endIndex)))!
+    
+    print("selected segment value is \(percent)%")
+    
+    if buttonTitle == "-" && percent > 1 {
+      tipSettingsControl.setTitle("\(percent - 1)%" , forSegmentAt: selectedSegment)
+    } else if percent < 99 {
+      tipSettingsControl.setTitle("\(percent + 1)%" , forSegmentAt: selectedSegment)
     }
-    */
-
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    print("view will appear")
+    
+    var dataStore = DataStore()
+    dataStore.loadSettings()
+    
+    for index in 0...2 {
+      tipSettingsControl.setTitle("\(dataStore.tipPercentages[index])%", forSegmentAt: index)
+    }
+    tipSettingsControl.selectedSegmentIndex = dataStore.defaultPercentageIndex
+    
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    print("view will disappear")
+    
+    var newTipPercentages = [Int]()
+    
+    for index in 0...2 {
+      let title = tipSettingsControl.titleForSegment(at: index)!
+      let percent = Int(title.substring(to: title.index(before: title.endIndex)))!
+      newTipPercentages.append(percent)
+    }
+    
+    let dataStore = DataStore()
+    dataStore.saveSettings(tipPercentages: newTipPercentages, defaultPercentageIndex: tipSettingsControl.selectedSegmentIndex)
+    
+  }
+  
+  /*
+   // MARK: - Navigation
+   
+   // In a storyboard-based application, you will often want to do a little preparation before navigation
+   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+   // Get the new view controller using segue.destinationViewController.
+   // Pass the selected object to the new view controller.
+   }
+   */
+  
 }

@@ -12,10 +12,10 @@ import Foundation
 struct DataStore {
   
   var tipPercentages = [18, 20, 25] // predifined tip amounts for first app run
-  let tipPercentagesKey = "tippy_tip_percentages01" // key value for user defaults database
+  let tipPercentagesKey = "tippy_tip_percentages02" // key value for user defaults database
   
   var defaultPercentageIndex = 0 // predefined for first app run
-  let defaultPercentageIndexKey = "tippy_default_percentage_index01" // key value for user defaults database
+  let defaultPercentageIndexKey = "tippy_default_percentage_index02" // key value for user defaults database
   
   // converts provided parameters to text and saves them to user defaults
   func saveSettings(tipPercentages percentages: [Int], defaultPercentageIndex index: Int) {

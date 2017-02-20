@@ -16,6 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+      
+      var store = DataStore()
+      store.loadSettings()
+      //store.saveSettings(tipPercentages: [11.0, 22.0, 33.0], defaultPercentageIndex: 1)
+      
+      
         return true
     }
 

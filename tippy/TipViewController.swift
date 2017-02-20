@@ -48,18 +48,13 @@ class TipViewController: UIViewController {
     super.viewWillAppear(animated)
     print("view will appear")
     
-    let defaults = UserDefaults.standard
-
+    var dataStore = DataStore()
+    dataStore.loadSettings()
     
-    let defaultPercentage = defaults.double(forKey: "tippy_default_percentage")
-    print("Default % from settings = \(defaultPercentage)")
-    
-    let tipPercetages = [0.18:0, 0.2:1, 0.25:2]
-    
-    if let segment = tipPercetages[defaultPercentage] {
-      
-      tipControl.selectedSegmentIndex = segment
+    for index in 0...2 {
+      tipControl.setTitle("\(dataStore.tipPercentages[index])%", forSegmentAt: index)
     }
+    tipControl.selectedSegmentIndex = dataStore.defaultPercentageIndex
     
   }
   
