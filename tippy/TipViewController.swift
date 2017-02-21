@@ -44,6 +44,9 @@ class TipViewController: UIViewController {
     super.viewWillAppear(animated)
     print("view will appear")
     tipControl.loadTitles()
+    
+    billField.becomeFirstResponder()
+    
   }
   
   override func viewDidAppear(_ animated: Bool) {
