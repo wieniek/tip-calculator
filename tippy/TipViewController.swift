@@ -32,26 +32,18 @@ class TipViewController: UIViewController {
   
   @IBAction func calculateTip(_ sender: AnyObject) {
     
-    
     let bill = Double(billField.text!) ?? 0
     let tipIndex = tipControl.selectedSegmentIndex
-    
     let calculator = TipCalculator()
-    
     let result = calculator.calculateTip(forBill: bill, withIndex: tipIndex)
-        
     tipLabel.text = String(format: "$%.2f", result.tip)
     totalLabel.text = String(format: "$%.2f", result.total)
-    
   }
-  
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     print("view will appear")
-    
     tipControl.loadTitles()
-    
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -68,7 +60,5 @@ class TipViewController: UIViewController {
     super.viewDidDisappear(animated)
     print("view did disappear")
   }
-  
-  
 }
 

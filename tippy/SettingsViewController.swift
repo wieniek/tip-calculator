@@ -24,15 +24,11 @@ class SettingsViewController: UIViewController {
   
   @IBOutlet weak var tipSettingsControl: UISegmentedControl!
   
-  
   @IBAction func setDefaultTip(_ sender: UISegmentedControl) {
     
     let defaultTipIndex = sender.selectedSegmentIndex
     print("\(defaultTipIndex)")
-    
-    
   }
-  
   
   @IBAction func changeTipAmount(_ sender: UIButton) {
     
@@ -56,7 +52,6 @@ class SettingsViewController: UIViewController {
     print("view will appear")
     
     tipSettingsControl.loadTitles()
-    
   }
   
   override func viewWillDisappear(_ animated: Bool) {
