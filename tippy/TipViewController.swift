@@ -48,13 +48,15 @@ class TipViewController: UIViewController {
     super.viewWillAppear(animated)
     print("view will appear")
     
-    var dataStore = DataStore()
-    dataStore.loadSettings()
+    tipControl.loadTitles()
     
-    for index in 0...2 {
-      tipControl.setTitle("\(dataStore.tipPercentages[index])%", forSegmentAt: index)
-    }
-    tipControl.selectedSegmentIndex = dataStore.defaultPercentageIndex
+//    var dataStore = DataStore()
+//    dataStore.loadSettings()
+//    
+//    for index in 0...2 {
+//      tipControl.setTitle("\(dataStore.tipPercentages[index])%", forSegmentAt: index)
+//    }
+//    tipControl.selectedSegmentIndex = dataStore.defaultPercentageIndex
     
   }
   

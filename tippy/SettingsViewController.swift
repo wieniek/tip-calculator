@@ -55,13 +55,15 @@ class SettingsViewController: UIViewController {
     super.viewWillAppear(animated)
     print("view will appear")
     
-    var dataStore = DataStore()
-    dataStore.loadSettings()
+//    var dataStore = DataStore()
+//    dataStore.loadSettings()
+//    
+//    for index in 0...2 {
+//      tipSettingsControl.setTitle("\(dataStore.tipPercentages[index])%", forSegmentAt: index)
+//    }
+//    tipSettingsControl.selectedSegmentIndex = dataStore.defaultPercentageIndex
     
-    for index in 0...2 {
-      tipSettingsControl.setTitle("\(dataStore.tipPercentages[index])%", forSegmentAt: index)
-    }
-    tipSettingsControl.selectedSegmentIndex = dataStore.defaultPercentageIndex
+    tipSettingsControl.loadTitles()
     
   }
   
