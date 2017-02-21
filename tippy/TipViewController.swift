@@ -32,14 +32,16 @@ class TipViewController: UIViewController {
   
   @IBAction func calculateTip(_ sender: AnyObject) {
     
-    let tipPercetages = [0.18, 0.2, 0.25]
     
     let bill = Double(billField.text!) ?? 0
-    let tip = bill * tipPercetages[tipControl.selectedSegmentIndex]
-    let total = bill + tip
+    let tipIndex = tipControl.selectedSegmentIndex
     
-    tipLabel.text = String(format: "$%.2f", tip)
-    totalLabel.text = String(format: "$%.2f", total)
+    let calculator = TipCalculator()
+    
+    let result = calculator.calculateTip(forBill: bill, withIndex: tipIndex)
+        
+    tipLabel.text = String(format: "$%.2f", result.tip)
+    totalLabel.text = String(format: "$%.2f", result.total)
     
   }
   
@@ -49,14 +51,6 @@ class TipViewController: UIViewController {
     print("view will appear")
     
     tipControl.loadTitles()
-    
-//    var dataStore = DataStore()
-//    dataStore.loadSettings()
-//    
-//    for index in 0...2 {
-//      tipControl.setTitle("\(dataStore.tipPercentages[index])%", forSegmentAt: index)
-//    }
-//    tipControl.selectedSegmentIndex = dataStore.defaultPercentageIndex
     
   }
   

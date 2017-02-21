@@ -55,14 +55,6 @@ class SettingsViewController: UIViewController {
     super.viewWillAppear(animated)
     print("view will appear")
     
-//    var dataStore = DataStore()
-//    dataStore.loadSettings()
-//    
-//    for index in 0...2 {
-//      tipSettingsControl.setTitle("\(dataStore.tipPercentages[index])%", forSegmentAt: index)
-//    }
-//    tipSettingsControl.selectedSegmentIndex = dataStore.defaultPercentageIndex
-    
     tipSettingsControl.loadTitles()
     
   }
@@ -81,17 +73,5 @@ class SettingsViewController: UIViewController {
     
     let dataStore = DataStore()
     dataStore.saveSettings(tipPercentages: newTipPercentages, defaultPercentageIndex: tipSettingsControl.selectedSegmentIndex)
-    
   }
-  
-  /*
-   // MARK: - Navigation
-   
-   // In a storyboard-based application, you will often want to do a little preparation before navigation
-   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-   // Get the new view controller using segue.destinationViewController.
-   // Pass the selected object to the new view controller.
-   }
-   */
-  
 }

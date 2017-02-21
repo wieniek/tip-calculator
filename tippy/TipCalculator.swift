@@ -10,20 +10,17 @@ import Foundation
 
 struct TipCalculator {
   
-  let tipPercetages = [0.18, 0.2, 0.25]
-  
-  func calculateTip(forBill: Double) {
+  func calculateTip(forBill bill: Double, withIndex index: Int) -> (total: Double, tip: Double) {
     
+    var dataStore = DataStore()
+    dataStore.loadSettings()
+    
+    let tipPercetages = dataStore.tipPercentages
+    
+    let tip = bill * Double(tipPercetages[index]) * 0.01
+    let total = bill + tip
+    
+    return (total, tip)
     
   }
-  
-//    let defaultPercentage = tipPercetages[sender.selectedSegmentIndex]
-//    print("Selected Default % = \(defaultPercentage)")
-//    
-//    let defaults = UserDefaults.standard
-//    //defaults.set("some_string_to_save", forKey: "some_key_that_you_choose")
-//    defaults.set(defaultPercentage, forKey: "tippy_default_percentage")
-//    defaults.synchronize()
-
-  
 }

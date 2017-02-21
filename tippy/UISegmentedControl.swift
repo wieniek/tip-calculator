@@ -19,5 +19,4 @@ extension UISegmentedControl {
     }
     selectedSegmentIndex = dataStore.defaultPercentageIndex
   }
-  
 }
