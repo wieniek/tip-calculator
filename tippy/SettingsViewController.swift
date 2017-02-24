@@ -27,7 +27,7 @@ class SettingsViewController: UIViewController {
   @IBAction func setDefaultTip(_ sender: UISegmentedControl) {
     
     let defaultTipIndex = sender.selectedSegmentIndex
-    print("\(defaultTipIndex)")
+    print("Set default tip index to \(defaultTipIndex)")
   }
   
   @IBAction func changeTipAmount(_ sender: UIButton) {
@@ -38,7 +38,7 @@ class SettingsViewController: UIViewController {
     
     let percent = Int(title.substring(to: title.index(before: title.endIndex)))!
     
-    print("selected segment value is \(percent)%")
+    //print("selected segment value is \(percent)%")
     
     if buttonTitle == "-" && percent > 1 {
       tipSettingsControl.setTitle("\(percent - 1)%" , forSegmentAt: selectedSegment)
@@ -49,14 +49,14 @@ class SettingsViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    print("view will appear")
+    print("Settings view will appear")
     
     tipSettingsControl.loadTitles()
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    print("view will disappear")
+    print("Settings view will disappear")
     
     var newTipPercentages = [Int]()
     
@@ -66,7 +66,8 @@ class SettingsViewController: UIViewController {
       newTipPercentages.append(percent)
     }
     
-    let dataStore = DataStore()
-    dataStore.saveSettings(tipPercentages: newTipPercentages, defaultPercentageIndex: tipSettingsControl.selectedSegmentIndex)
+    DataStore.singleton.tipPercentages = newTipPercentages
+    DataStore.singleton.defaultPercentageIndex = tipSettingsControl.selectedSegmentIndex
+    
   }
 }

@@ -12,10 +12,10 @@ struct TipCalculator {
   
   func calculateTip(forBill bill: Double, withIndex index: Int) -> (total: Double, tip: Double) {
     
-    var dataStore = DataStore()
-    dataStore.loadSettings()
+    //var dataStore = DataStore()
+    DataStore.singleton.loadSettings()
     
-    let tipPercetages = dataStore.tipPercentages
+    let tipPercetages = DataStore.singleton.tipPercentages
     
     let tip = bill * Double(tipPercetages[index]) * 0.01
     let total = bill + tip

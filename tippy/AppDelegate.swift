@@ -13,19 +13,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
   
-  
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
  
     // Load application settings from user defaults
     // If settings not found in user defaults then assume initial app defaults
-    var store = DataStore()
-    store.loadSettings()
+    print("Application Did Finish Launching - Load settings from user defaults")
+    DataStore.singleton.loadSettings()
     return true
   }
   
   func applicationWillResignActive(_ application: UIApplication) {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+    
+    print("Application Will Resign Active - Save current time to user defaults")
+    DataStore.singleton.saveDateTime()
+    print("Application Will Resign Active - Save settings to user defaults")
+    DataStore.singleton.saveSettings()
+    
   }
   
   func applicationDidEnterBackground(_ application: UIApplication) {
@@ -39,12 +44,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func applicationDidBecomeActive(_ application: UIApplication) {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        
+    print("Application Did Become Active - Load time from user defaults compare with current time")
+    let currentDateTime = Date()
+    let timeoutDateTime = DataStore.singleton.loadDateTime().addingTimeInterval(30)
+    print("TimeOut DateTime is = \(timeoutDateTime))")
+    
+    if timeoutDateTime < currentDateTime {
+      print("Timeout has been reached, set billAmountNeedsToBeReset true")
+      DataStore.singleton.billAmountNeedsToBeReset = true
+    }
   }
   
   func applicationWillTerminate(_ application: UIApplication) {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
   }
-  
-  
 }
 

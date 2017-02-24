@@ -11,12 +11,13 @@ import UIKit
 extension UISegmentedControl {
   
   func loadTitles()  {
-    var dataStore = DataStore()
-    dataStore.loadSettings()
+    //var dataStore = DataStore()
+    
+    //DataStore.singleton.loadSettings()
     
     for index in 0...2 {
-      setTitle("\(dataStore.tipPercentages[index])%", forSegmentAt: index)
+      setTitle("\(DataStore.singleton.tipPercentages[index])%", forSegmentAt: index)
     }
-    selectedSegmentIndex = dataStore.defaultPercentageIndex
+    selectedSegmentIndex = DataStore.singleton.defaultPercentageIndex
   }
 }
