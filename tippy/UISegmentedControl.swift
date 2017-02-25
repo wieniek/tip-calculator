@@ -8,12 +8,11 @@
 
 import UIKit
 
+// Extend Segmented Control in order to reuse code
+// loadTitles method can be called from different classes
 extension UISegmentedControl {
   
   func loadTitles()  {
-    //var dataStore = DataStore()
-    
-    //DataStore.singleton.loadSettings()
     
     for index in 0...2 {
       setTitle("\(DataStore.singleton.tipPercentages[index])%", forSegmentAt: index)

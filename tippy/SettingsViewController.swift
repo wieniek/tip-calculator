@@ -9,36 +9,19 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    // Do any additional setup after loading the view.
-  }
-  
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
-  }
-  
-  
+
   @IBOutlet weak var tipSettingsControl: UISegmentedControl!
   
-  @IBAction func setDefaultTip(_ sender: UISegmentedControl) {
-    
-    let defaultTipIndex = sender.selectedSegmentIndex
-    //print("Set default tip index to \(defaultTipIndex)")
-  }
-  
+  // Called when one of the [+] [-] buttons is pressed
+  // Changes tip amount at the selected segment
   @IBAction func changeTipAmount(_ sender: UIButton) {
     
     let buttonTitle = sender.currentTitle
     let selectedSegment = tipSettingsControl.selectedSegmentIndex
     let title = tipSettingsControl.titleForSegment(at: selectedSegment)!
     
+    // Convert text to number
     let percent = Int(title.substring(to: title.index(before: title.endIndex)))!
-    
-    //print("selected segment value is \(percent)%")
     
     if buttonTitle == "-" && percent > 1 {
       tipSettingsControl.setTitle("\(percent - 1)%" , forSegmentAt: selectedSegment)
@@ -47,17 +30,15 @@ class SettingsViewController: UIViewController {
     }
   }
   
+  // Load precentages before view appears
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    //print("Settings view will appear")
-    
     tipSettingsControl.loadTitles()
   }
   
+  // Save values to DataStore before view is dismissed
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    //print("Settings view will disappear")
-    
     var newTipPercentages = [Int]()
     
     for index in 0...2 {
@@ -65,9 +46,7 @@ class SettingsViewController: UIViewController {
       let percent = Int(title.substring(to: title.index(before: title.endIndex)))!
       newTipPercentages.append(percent)
     }
-    
     DataStore.singleton.tipPercentages = newTipPercentages
     DataStore.singleton.defaultPercentageIndex = tipSettingsControl.selectedSegmentIndex
-    
   }
 }

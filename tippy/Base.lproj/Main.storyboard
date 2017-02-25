@@ -134,9 +134,6 @@
                                     <segment title="20%"/>
                                     <segment title="25%"/>
                                 </segments>
-                                <connections>
-                                    <action selector="setDefaultTip:" destination="Ass-ge-mxJ" eventType="valueChanged" id="Eul-bu-wje"/>
-                                </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Choose default tip:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K2C-bQ-gTK">
                                 <rect key="frame" x="38" y="72" width="145" height="21"/>

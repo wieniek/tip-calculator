@@ -15,28 +15,20 @@ class TipViewController: UIViewController {
   @IBOutlet weak var billField: UITextField!
   @IBOutlet weak var tipControl: UISegmentedControl!
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    // Do any additional setup after loading the view, typically from a nib.
-    
-  }
-  
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
-  }
-  
+  // Set focus to the view and dismiss keyboard when tapped
   @IBAction func onTap(_ sender: AnyObject) {
+    view.becomeFirstResponder()
     view.endEditing(true)
   }
   
+  // Recalculate tip amount and total using provided values
   @IBAction func calculateTip(_ sender: AnyObject) {
     
     // Get user input
     let billAmount = Double(billField.text!) ?? 0
     let tipIndex = tipControl.selectedSegmentIndex
     
-    // Use TipCalculator to calculate tip and total amount
+    // Use TipCalculator struct to calculate tip and total amount
     let calculator = TipCalculator()
     let result = calculator.calculateTip(forBill: billAmount, withIndex: tipIndex)
     
@@ -45,6 +37,7 @@ class TipViewController: UIViewController {
     totalLabel.text = String(format: "$%.2f", result.total)
   }
   
+  // Setup notification observers and properties before view is shown
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     print("Tip view will appear - setup observers")
@@ -61,9 +54,11 @@ class TipViewController: UIViewController {
                                            name: .UIApplicationWillResignActive,
                                            object: nil)
     
-    //Setup Segmented Control properties
+    //Setup UISegmentedControl properties
     tipControl.loadTitles()
-    //Show numeric keyboard to input bill amount
+    
+    //Set focus to the input field
+    //Shows numeric keyboard to input bill amount
     billField.becomeFirstResponder()
   }
   
@@ -72,7 +67,7 @@ class TipViewController: UIViewController {
   // Otherwise load Bill UI input field value from storage
   @objc func checkBillField() {
     let clearBillAmount = DataStore.singleton.billAmountNeedsToBeReset
-    print("Method called by notification - Clear Bill Amount is set to \(clearBillAmount)")
+    print("Method called by notification - Clear Bill Amount is \(clearBillAmount)")
     if clearBillAmount {
       billField.text = ""
       DataStore.singleton.billAmountNeedsToBeReset = false
@@ -89,11 +84,7 @@ class TipViewController: UIViewController {
     DataStore.singleton.saveBillAmount()
   }
   
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    //print("Tip view did appear")
-  }
-  
+  // Must remove notification observers before view goes away
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     print("Tip view will disappear - remove observers")
@@ -105,11 +96,6 @@ class TipViewController: UIViewController {
     NotificationCenter.default.removeObserver(self,
                                               name: .UIApplicationWillResignActive,
                                               object: nil)
-  }
-  
-  override func viewDidDisappear(_ animated: Bool) {
-    super.viewDidDisappear(animated)
-    //print("Tip view did disappear")
   }
 }
 

@@ -21,9 +21,12 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
-- [X] Implemented MVC patern by refactoring the code and creating structs for data model
-- [X] Ability to increase and decrease all three tip amounts in the settings screen
+- [X] Plus/minus buttons to increase and decrease tip amounts in the settings screen
+- [X] Implemented singleton pattern to store data point between diffrent screens.
+      This way application does not need to read/write to user defaults all the time.
+      Writing to user defaults is still needed on application restart.
+- [X] Implemented MVC pattern by refactoring the code and creating data model structs
+      Data model implementation is separated from view controller implementation.
 - [ ] List anything else that you can get done to improve the app functionality!
 
 ## Video Walkthrough 
