@@ -1,6 +1,6 @@
 # Pre-work - *Tip Calculator*
 
-**Tip Calculator** is a tip calculator application for iOS.
+**Tip Calculator** is iOS application which provides easy way to calculate tip and total amounts for a bill.
 
 Submitted by: **Wieniek**
 
@@ -21,19 +21,16 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [X] Plus/minus buttons to increase and decrease tip amounts in the settings screen
-- [X] Implemented singleton pattern to store data point between diffrent screens.
-      This way application does not need to read/write to user defaults all the time.
-      Writing to user defaults is still needed on application restart.
-- [X] Implemented MVC pattern by refactoring the code and creating data model structs
-      Data model implementation is separated from view controller implementation.
+- [X] Plus/minus buttons in the settings screen can be used to increase and decrease preset tip amounts.
+- [X] Implemented singleton pattern to store data when switching between diffrent application views. This way the application does not need to read/write to user defaults when user switches screens. Writing to user defaults is still required to store parameters on application restart.
+- [X] Implemented MVC pattern by refactoring the code and creating strictures for data model. Data model implementation code is therefore separated from view controller implementation.
 - [ ] List anything else that you can get done to improve the app functionality!
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/PMKI1UH.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
