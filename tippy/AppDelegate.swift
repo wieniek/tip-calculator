@@ -19,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // If settings not found in user defaults then assume initial app defaults
     print("Application Did Finish Launching - Load settings from user defaults")
     DataStore.singleton.loadSettings()
+    print("Application Did Finish Launching - Load Bill Amount from user defaults")
+    DataStore.singleton.billAmount = DataStore.singleton.loadBillAmount()
     return true
   }
   

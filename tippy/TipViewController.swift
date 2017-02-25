@@ -47,49 +47,69 @@ class TipViewController: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
+    print("Tip view will appear - setup observers")
     //register TipViewController class as an observer
-    //for UIApplicationDidBecomeActiveNotification
-    //specify checkBillField method to be called when notification is send out
+    //for UIApplicationDidBecomeActive Notification
+    //and UIApplicationWillResignActive Notification
     NotificationCenter.default.addObserver(self,
                                            selector: #selector(checkBillField),
                                            name: .UIApplicationDidBecomeActive,
                                            object: nil)
+    
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(saveBillFieldTextInput),
+                                           name: .UIApplicationWillResignActive,
+                                           object: nil)
+    
     //Setup Segmented Control properties
     tipControl.loadTitles()
     //Show numeric keyboard to input bill amount
     billField.becomeFirstResponder()
   }
   
-  // This method will be called by UIApplicationDidBecomeActiveNotification
+  // This method will be called by UIApplicationDidBecomeActive Notification
   // Check DataStore variable and clear Bill UI input field if needed
+  // Otherwise load Bill UI input field value from storage
   @objc func checkBillField() {
     let clearBillAmount = DataStore.singleton.billAmountNeedsToBeReset
     print("Method called by notification - Clear Bill Amount is set to \(clearBillAmount)")
     if clearBillAmount {
       billField.text = ""
       DataStore.singleton.billAmountNeedsToBeReset = false
+    } else {
+      billField.text = DataStore.singleton.billAmount
     }
+  }
+  
+  // This method will be called by UIApplicationWillResignActive Notification
+  // Save Bill UI input field to user settings
+  @objc func saveBillFieldTextInput() {
+    print("Method called by notification - Save Bill Amount")
+    DataStore.singleton.billAmount = billField.text!
+    DataStore.singleton.saveBillAmount()
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
-    print("Tip view did appear")
+    //print("Tip view did appear")
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    print("Tip view will disappear")
+    print("Tip view will disappear - remove observers")
     
-    // removing notification observer
+    // removing notification observers
     NotificationCenter.default.removeObserver(self,
                                               name: .UIApplicationDidBecomeActive,
+                                              object: nil)
+    NotificationCenter.default.removeObserver(self,
+                                              name: .UIApplicationWillResignActive,
                                               object: nil)
   }
   
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
-    print("Tip view did disappear")
+    //print("Tip view did disappear")
   }
 }
 
