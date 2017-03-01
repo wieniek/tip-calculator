@@ -16,9 +16,11 @@ class TipViewController: UIViewController {
   @IBOutlet weak var tipControl: UISegmentedControl!
   
   
+  @IBOutlet weak var billView: UIView!
+  
+  
+  
   @IBOutlet weak var tipResultsView: UIView!
-  
-  
   
   // Set focus to the view and dismiss keyboard when tapped
   @IBAction func onTap(_ sender: AnyObject) {
@@ -26,6 +28,44 @@ class TipViewController: UIViewController {
     view.endEditing(true)
   }
   
+  // Function setAnchorPoint adjusts CALayer's position to account for new anchorPoint
+  // Source: stackoverflow.com
+  // Question: Changing my CALayer's anchorPoint moves the view
+  // http://stackoverflow.com/questions/1968017/changing-my-calayers-anchorpoint-moves-the-view
+  
+  func setAnchorPoint(anchorPoint point: CGPoint, forView view: UIView) {
+    
+    var newPoint = CGPoint(x: view.bounds.size.width * point.x, y: view.bounds.size.height * point.y)
+    
+    var oldPoint = CGPoint(x: view.bounds.size.width * view.layer.anchorPoint.x, y: view.bounds.size.height * view.layer.anchorPoint.y)
+    
+    newPoint = __CGPointApplyAffineTransform(newPoint, view.transform)
+    
+    oldPoint = __CGPointApplyAffineTransform(oldPoint, view.transform)
+    
+    var position = view.layer.position
+ 
+    position.x -= oldPoint.x
+    position.x += newPoint.x
+    
+    position.y -= oldPoint.y
+    position.y += newPoint.y
+    
+    view.layer.position = position
+    view.layer.anchorPoint = point
+  }
+  
+  func correctLayerPosition() {
+    
+    //correct layer possition
+    var position = billView.layer.position
+    let anchorPoint = billView.layer.anchorPoint
+    let bounds = billView.bounds
+    position.x = (0.5 * bounds.size.width) + (anchorPoint.x - 0.5) * bounds.size.width
+    position.y = (0.5 * bounds.size.height) + (anchorPoint.y - 0.5) * bounds.size.height
+    billView.layer.position = position
+    
+  }
   
   @IBAction func animateTipResultsView(_ sender: UITextField) {
     
@@ -34,24 +74,80 @@ class TipViewController: UIViewController {
       let tipResultsViewCenterY = Double(tipResultsView.center.y)
       let offset = view.bounds.height
       
-      print("TEXT LENGHT = \(numberOfCharacters)")
-      print("VIEW CENTER = \(tipResultsViewCenterY)")
+      //print("TEXT LENGHT = \(numberOfCharacters)")
+      //print("VIEW CENTER = \(tipResultsViewCenterY)")
       
       if numberOfCharacters == 1 && tipResultsViewCenterY > 300 {
         
-        animateView(moveByPoints: -offset)
-      } else if numberOfCharacters == 0 && tipResultsViewCenterY < 300 {
-        animateView(moveByPoints: offset)
+        UIView.animate(withDuration: 5.0, delay: 0.0, options: .curveEaseOut, animations: {
+          self.tipResultsView.center.y -= offset
+        }, completion: { finished in print("End of amimation1")})
+        
+        let duration = 5.0
+        let delay = 0.0
+        let options = UIViewKeyframeAnimationOptions.calculationModeLinear
+        let point = CGPoint(x: 0, y: 0)
+        
+        UIView.animateKeyframes(withDuration: duration, delay: delay, options: options, animations: {
+//          UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1/2, animations: {
+//            self.billField.center.x += point.x
+//            self.billField.center.y -= point.y })
+          
+          UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1, animations: {
+            //self.billView.layer.anchorPoint = CGPoint(x: 0, y: 1)
+            
+            //correct layer possition
+//            var position = self.billView.layer.position
+//            
+//            print("POSITION1 = \(position)")
+//            
+//            let anchorPoint = self.billView.layer.anchorPoint
+//            let bounds = self.billView.bounds
+//            position.x = (0.5 * bounds.size.width) + (anchorPoint.x - 0.5) * bounds.size.width
+//            position.y = (0.5 * bounds.size.height) + (anchorPoint.y - 0.5) * bounds.size.height
+//            
+//            print("POSITION2 = \(position)")
+            
+            //self.billView.layer.position = CGPoint(x: 280, y: 110)
+            //self.billView.layer.position = CGPoint(x: 128.5, y: 56.5) //position
+            
+            
+            //self.setAnchorPoint(anchorPoint: CGPoint(x: 0, y: 0), forView: self.billView)
+            //let scale = CGAffineTransform(scaleX: 0.5, y: 0.5)})
+            let translate = CGAffineTransform(translationX: 50, y: 0)
+            let translateAndScale = translate.scaledBy(x: 0.5, y: 0.5)
+            self.billView.transform = translateAndScale })
+          
+        }, completion: {finished in })
+      }
+        
+      else if numberOfCharacters == 0 && tipResultsViewCenterY < 300 {
+        
+        UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseOut, animations: {
+          self.tipResultsView.center.y += offset
+        }, completion: { finished in print("End of amimation1")})
+        
+        let duration = 2.0
+        let delay = 0.0
+        let options = UIViewKeyframeAnimationOptions.calculationModeLinear
+        let point = CGPoint(x: 20, y: 20)
+        
+        UIView.animateKeyframes(withDuration: duration, delay: delay, options: options, animations: {
+          
+          UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1/3, animations: {
+            self.billField.center.x += point.x
+            self.billField.center.y += point.y })
+          
+          UIView.addKeyframe(withRelativeStartTime: 1/3, relativeDuration: 1/3, animations: {
+            self.billField.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)})
+          
+          UIView.addKeyframe(withRelativeStartTime: 2/3, relativeDuration: 1/3, animations: {
+            self.billField.center.x += point.x
+            self.billField.center.y += point.y })
+          
+        }, completion: {finished in })
       }
     }
-  }
-  
-  func animateView(moveByPoints points: CGFloat) {
-    UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
-
-        self.tipResultsView.center.y += points
-
-    }, completion: { finished in print("End of amimation1")})
   }
 
   // Recalculate tip amount and total using provided values
