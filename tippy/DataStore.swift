@@ -13,6 +13,9 @@ struct DataStore {
   
   static var singleton = DataStore() // singleton
   
+  // Number formatter used for locale currency format
+  var formatter = NumberFormatter()
+  
   var billAmount = ""
   let billAmountKey = "tippy_bill_amount_09"
   
@@ -87,6 +90,7 @@ struct DataStore {
       return currentDateTime
     }
   }
+  
 }
 
 

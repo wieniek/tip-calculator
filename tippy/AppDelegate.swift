@@ -21,6 +21,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     DataStore.singleton.loadSettings()
     print("Application Did Finish Launching - Load Bill Amount from user defaults")
     DataStore.singleton.billAmount = DataStore.singleton.loadBillAmount()
+    
+    // Setup currency formatter
+    DataStore.singleton.formatter.numberStyle = .currency
+    DataStore.singleton.formatter.locale = NSLocale.current
+    
+    
     return true
   }
   

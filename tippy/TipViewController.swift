@@ -17,6 +17,17 @@ class TipViewController: UIViewController {
   
   @IBOutlet weak var tipResultsView: UIView!
   
+  // Calulated variable
+  // Returns numerical value converted from input text field
+  var billAmount: Double {
+    get {
+      
+      let billText = billField.text ?? ""
+      let amountText = billText.replacingOccurrences(of: DataStore.singleton.formatter.currencySymbol, with: "")
+      return Double(amountText) ?? 0.0
+    }
+    set { }
+  }
   // Set focus to the view and dismiss keyboard when tapped
   @IBAction func onTap(_ sender: AnyObject) {
     view.becomeFirstResponder()
@@ -28,25 +39,17 @@ class TipViewController: UIViewController {
     if let numberOfCharacters = billField.text?.characters.count {
       
       let tipResultsViewCenterY = Double(tipResultsView.center.y)
-      let offset = view.bounds.height
-      
-      //print("TEXT LENGHT = \(numberOfCharacters)")
-      print("VIEW CENTER0 = \(tipResultsViewCenterY)")
+      let offset = view.bounds.height / 2
       
       if numberOfCharacters == 1 && tipResultsViewCenterY > 300 {
-        
-        
-        UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
           self.tipResultsView.center.y -= offset
         }, completion: { finished in print("End of amimation1")})
         
-        
-        UIView.animate(withDuration: 1.0, delay: 0.5, options: .curveEaseOut, animations: {
-          
-          let translate = CGAffineTransform(translationX: 50, y: 0)
+        UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
+          let translate = CGAffineTransform(translationX: 75, y: -25)
           let translateAndScale = translate.scaledBy(x: 0.5, y: 0.5)
           self.billField.transform = translateAndScale
-          
         }, completion: { finished in print("VIEW CENTER1 = \(tipResultsViewCenterY)")})
       }
         
@@ -72,7 +75,6 @@ class TipViewController: UIViewController {
   @IBAction func calculateTip(_ sender: AnyObject) {
     
     // Get user input
-    let billAmount = Double(billField.text!) ?? 0
     let tipIndex = tipControl.selectedSegmentIndex
     
     // Use TipCalculator struct to calculate tip and total amount
@@ -80,8 +82,8 @@ class TipViewController: UIViewController {
     let result = calculator.calculateTip(forBill: billAmount, withIndex: tipIndex)
     
     // Display results
-    tipLabel.text = String(format: "$%.2f", result.tip)
-    totalLabel.text = String(format: "$%.2f", result.total)
+    tipLabel.text = DataStore.singleton.formatter.string(from: NSNumber(value: result.tip))
+    totalLabel.text = DataStore.singleton.formatter.string(from: NSNumber(value: result.total))
   }
   
   // Setup notification observers and properties before view is shown
@@ -106,6 +108,9 @@ class TipViewController: UIViewController {
     
     //Setup UISegmentedControl properties
     tipControl.loadTitles()
+    
+    //Initialize input field with locale currency symbol
+    billField.text = DataStore.singleton.formatter.currencySymbol
     
     //Set focus to the input field
     //Shows numeric keyboard to input bill amount
