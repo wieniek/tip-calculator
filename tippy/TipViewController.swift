@@ -163,6 +163,8 @@ class TipViewController: UIViewController {
           
         }
     
+    calculateTip(self)
+    
   }
   
   // This method will be called by UIApplicationDidBecomeActive Notification

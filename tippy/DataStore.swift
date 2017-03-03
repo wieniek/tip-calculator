@@ -30,16 +30,16 @@ struct DataStore {
   
   var billAmount: String
   
-  let billAmountKey = "tippy_bill_amount_15"
+  let billAmountKey = "tippy_bill_amount_16"
   
   var billAmountNeedsToBeReset = false
-  let dateTimeKey = "tippy_date_time_15"
+  let dateTimeKey = "tippy_date_time_16"
   
   var tipPercentages = [18, 20, 25] // predifined tip amounts for first app run
-  let tipPercentagesKey = "tippy_tip_percentages15" // key value for user defaults database
+  let tipPercentagesKey = "tippy_tip_percentages16" // key value for user defaults database
   
   var defaultPercentageIndex = 0 // predefined for first app run
-  let defaultPercentageIndexKey = "tippy_default_percentage_index15" // key value for user defaults database
+  let defaultPercentageIndexKey = "tippy_default_percentage_index16" // key value for user defaults database
   
   // converts provided parameters to text and saves them to user defaults
   func saveSettings() {
