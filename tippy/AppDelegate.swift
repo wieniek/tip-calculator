@@ -14,19 +14,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
- 
+    
+    // Could not change bar Back button color in interface builder
+    // Set color to black programatically
+    UINavigationBar.appearance().tintColor = UIColor.black
+    
     // Load application settings from user defaults
     // If settings not found in user defaults then assume initial app defaults
     print("Application Did Finish Launching - Load settings from user defaults")
     DataStore.singleton.loadSettings()
     print("Application Did Finish Launching - Load Bill Amount from user defaults")
     DataStore.singleton.billAmount = DataStore.singleton.loadBillAmount()
-    
-    // Setup currency formatter
-    DataStore.singleton.formatter.numberStyle = .currency
-    DataStore.singleton.formatter.locale = NSLocale.current
-    
-    
     return true
   }
   

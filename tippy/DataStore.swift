@@ -11,22 +11,35 @@ import Foundation
 // DataStore provides persisten storage of default tip amounts to user defaults
 struct DataStore {
   
+  
+  init() {
+    
+    // Setup currency formatter
+    formatter = NumberFormatter()
+    formatter.numberStyle = .currency
+    formatter.locale = NSLocale.current
+    
+    billAmount = formatter.currencySymbol
+  }
+  
+  
   static var singleton = DataStore() // singleton
   
   // Number formatter used for locale currency format
-  var formatter = NumberFormatter()
+  var formatter: NumberFormatter
   
-  var billAmount = ""
-  let billAmountKey = "tippy_bill_amount_09"
+  var billAmount: String
+  
+  let billAmountKey = "tippy_bill_amount_15"
   
   var billAmountNeedsToBeReset = false
-  let dateTimeKey = "tippy_date_time_09"
+  let dateTimeKey = "tippy_date_time_15"
   
   var tipPercentages = [18, 20, 25] // predifined tip amounts for first app run
-  let tipPercentagesKey = "tippy_tip_percentages09" // key value for user defaults database
+  let tipPercentagesKey = "tippy_tip_percentages15" // key value for user defaults database
   
   var defaultPercentageIndex = 0 // predefined for first app run
-  let defaultPercentageIndexKey = "tippy_default_percentage_index09" // key value for user defaults database
+  let defaultPercentageIndexKey = "tippy_default_percentage_index15" // key value for user defaults database
   
   // converts provided parameters to text and saves them to user defaults
   func saveSettings() {
@@ -64,7 +77,8 @@ struct DataStore {
       return savedBillAmount
     } else {
       print("Load Bill Amount from user defaults, not found")
-      return ""
+      print("Load empty value = \(billAmount)")
+      return billAmount
     }
   }
   

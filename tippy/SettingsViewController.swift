@@ -23,7 +23,7 @@ class SettingsViewController: UIViewController {
     // Convert text to number
     let percent = Int(title.substring(to: title.index(before: title.endIndex)))!
     
-    if buttonTitle == "-" && percent > 1 {
+    if buttonTitle == "⊖" && percent > 1 {
       tipSettingsControl.setTitle("\(percent - 1)%" , forSegmentAt: selectedSegment)
     } else if percent < 99 {
       tipSettingsControl.setTitle("\(percent + 1)%" , forSegmentAt: selectedSegment)

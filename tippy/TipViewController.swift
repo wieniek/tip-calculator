@@ -39,10 +39,18 @@ class TipViewController: UIViewController {
     if let numberOfCharacters = billField.text?.characters.count {
       
       let tipResultsViewCenterY = Double(tipResultsView.center.y)
-      let offset = view.bounds.height / 2
       
-      if numberOfCharacters == 1 && tipResultsViewCenterY > 300 {
+      //let offset = view.bounds.height
+      let offset = CGFloat(200)
+      
+      self.tipResultsView.isHidden = false
+      
+      if numberOfCharacters == 2 && tipResultsViewCenterY > 400 {
+        
+        self.tipResultsView.alpha = 0.0
+        
         UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
+          self.tipResultsView.alpha = 1.0
           self.tipResultsView.center.y -= offset
         }, completion: { finished in print("End of amimation1")})
         
@@ -50,23 +58,36 @@ class TipViewController: UIViewController {
           let translate = CGAffineTransform(translationX: 75, y: -25)
           let translateAndScale = translate.scaledBy(x: 0.5, y: 0.5)
           self.billField.transform = translateAndScale
-        }, completion: { finished in print("VIEW CENTER1 = \(tipResultsViewCenterY)")})
+        }, completion: { finished in print("TIP VIEW CENTER1 = \(tipResultsViewCenterY)")})
+        
+        print("INITIAL AFT1 POSITION X = \(tipResultsView.center.x)")
+        print("INITIAL AFT1 POSITION Y = \(tipResultsView.center.y)")
+        print("INITIAL AFT1 POSITION FRAME ORIGIN X = \(tipResultsView.frame.origin.x)")
+        print("INITIAL AFT1 POSITION FRAME ORIGIN Y = \(tipResultsView.frame.origin.y)")
+        
       }
         
-      else if numberOfCharacters == 0 && tipResultsViewCenterY < 300 {
+      else if numberOfCharacters == 1 && tipResultsViewCenterY < 400 {
         
         
         UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseOut, animations: {
+          self.tipResultsView.alpha = 0.0
           self.tipResultsView.center.y += offset
         }, completion: { finished in print("End of amimation1")})
         
         UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseOut, animations: {
-          
           let translate = CGAffineTransform(translationX: 0, y: 0)
           let translateAndScale = translate.scaledBy(x: 1, y: 1)
           self.billField.transform = translateAndScale
           
-        }, completion: { finished in print("VIEW CENTER2 = \(tipResultsViewCenterY)")})
+        }, completion: { finished in print("TIP VIEW CENTER2 = \(tipResultsViewCenterY)")})
+        
+        print("INITIAL AFT2 POSITION X = \(tipResultsView.center.x)")
+        print("INITIAL AFT2 POSITION Y = \(tipResultsView.center.y)")
+        print("INITIAL AFT2 POSITION FRAME ORIGIN X = \(tipResultsView.frame.origin.x)")
+        print("INITIAL AFT2 POSITION FRAME ORIGIN Y = \(tipResultsView.frame.origin.y)")
+        
+        
       }
     }
   }
@@ -84,6 +105,11 @@ class TipViewController: UIViewController {
     // Display results
     tipLabel.text = DataStore.singleton.formatter.string(from: NSNumber(value: result.tip))
     totalLabel.text = DataStore.singleton.formatter.string(from: NSNumber(value: result.total))
+    
+    // If user deleted currency symbol, then put it back
+    if billField.text! == "" {
+      billField.text = DataStore.singleton.formatter.currencySymbol
+    }
   }
   
   // Setup notification observers and properties before view is shown
@@ -103,18 +129,40 @@ class TipViewController: UIViewController {
                                            name: .UIApplicationWillResignActive,
                                            object: nil)
     
-    //Animation part
-    tipResultsView.center.y += view.bounds.height
-    
     //Setup UISegmentedControl properties
     tipControl.loadTitles()
-    
-    //Initialize input field with locale currency symbol
-    billField.text = DataStore.singleton.formatter.currencySymbol
     
     //Set focus to the input field
     //Shows numeric keyboard to input bill amount
     billField.becomeFirstResponder()
+    billField.text = DataStore.singleton.billAmount
+    
+        print("Setting up VIEW POSITION")
+        print("CHAR COUNT = \(billField.text!.characters.count)")
+    
+        // Set tip results view initial position
+        if billField.text!.characters.count == 1 {
+          //tipResultsView.center.y += view.bounds.height
+          tipResultsView.center.x = CGFloat(187.5)
+          tipResultsView.center.y = CGFloat(415)
+    
+          print("INITIAL 1 POSITION X = \(tipResultsView.center.x)")
+          print("INITIAL 1 POSITION Y = \(tipResultsView.center.y)")
+          print("INITIAL 1 POSITION FRAME ORIGIN X = \(tipResultsView.frame.origin.x)")
+          print("INITIAL 1 POSITION FRAME ORIGIN Y = \(tipResultsView.frame.origin.y)")
+    
+    
+        } else {
+          tipResultsView.center.x = CGFloat(187.5)
+          tipResultsView.center.y = CGFloat(215)
+    
+          print("INITIAL 2 POSITION X = \(tipResultsView.center.x)")
+          print("INITIAL 2 POSITION Y = \(tipResultsView.center.y)")
+          print("INITIAL 2 POSITION FRAME ORIGIN X = \(tipResultsView.frame.origin.x)")
+          print("INITIAL 2 POSITION FRAME ORIGIN Y = \(tipResultsView.frame.origin.y)")
+          
+        }
+    
   }
   
   // This method will be called by UIApplicationDidBecomeActive Notification
@@ -124,7 +172,7 @@ class TipViewController: UIViewController {
     let clearBillAmount = DataStore.singleton.billAmountNeedsToBeReset
     print("Method called by notification - Clear Bill Amount is \(clearBillAmount)")
     if clearBillAmount {
-      billField.text = ""
+      billField.text = DataStore.singleton.formatter.currencySymbol
       DataStore.singleton.billAmountNeedsToBeReset = false
     } else {
       billField.text = DataStore.singleton.billAmount
@@ -151,5 +199,9 @@ class TipViewController: UIViewController {
     NotificationCenter.default.removeObserver(self,
                                               name: .UIApplicationWillResignActive,
                                               object: nil)
+    
+    // preserve billAmount
+    DataStore.singleton.billAmount = billField.text!
+    
   }
 }
