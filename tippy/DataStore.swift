@@ -11,9 +11,7 @@ import Foundation
 // DataStore provides persisten storage of default tip amounts to user defaults
 struct DataStore {
   
-  
   init() {
-    
     // Setup currency formatter
     formatter = NumberFormatter()
     formatter.numberStyle = .currency
@@ -21,7 +19,6 @@ struct DataStore {
     
     billAmount = formatter.currencySymbol
   }
-  
   
   static var singleton = DataStore() // singleton
   
@@ -63,7 +60,7 @@ struct DataStore {
   }
   
   func saveBillAmount() {
-    print("Save Bill Amount to user defaults, value is \(billAmount)")
+    //print("Save Bill Amount to user defaults, value is \(billAmount)")
     let defaults = UserDefaults.standard
     defaults.set(billAmount, forKey: billAmountKey)
     defaults.synchronize()
@@ -73,19 +70,18 @@ struct DataStore {
   func loadBillAmount() -> String {
     let defaults = UserDefaults.standard
     if let savedBillAmount = defaults.string(forKey: billAmountKey) {
-      print("Load Bill Amount from user defaults, value is \(savedBillAmount)")
+      //print("Load Bill Amount from user defaults, value is \(savedBillAmount)")
       return savedBillAmount
     } else {
-      print("Load Bill Amount from user defaults, not found")
-      print("Load empty value = \(billAmount)")
+      //print("Load Bill Amount from user defaults, not found")
+      //print("Load empty value = \(billAmount)")
       return billAmount
     }
   }
   
   func saveDateTime() {
     let currentDateTime = Date()
-    print("Save DateTime to user defaults, value is \(currentDateTime)")
-    
+    //print("Save DateTime to user defaults, value is \(currentDateTime)")
     let defaults = UserDefaults.standard
     defaults.set(currentDateTime, forKey: dateTimeKey)
     defaults.synchronize()
@@ -96,11 +92,11 @@ struct DataStore {
     
     let defaults = UserDefaults.standard
     if let savedDateTime = defaults.object(forKey: dateTimeKey) as? Date {
-      print("Load DateTime from user defaults, value is \(savedDateTime)")
+  //print("Load DateTime from user defaults, value is \(savedDateTime)")
       return savedDateTime
     } else {
       let currentDateTime = Date()
-      print("Load DateTime from user defaults, not found, set to \(currentDateTime)")
+  //print("Load DateTime from user defaults, not found, set to \(currentDateTime)")
       return currentDateTime
     }
   }

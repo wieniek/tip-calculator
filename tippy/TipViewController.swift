@@ -52,42 +52,28 @@ class TipViewController: UIViewController {
         UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
           self.tipResultsView.alpha = 1.0
           self.tipResultsView.center.y -= offset
-        }, completion: { finished in print("End of amimation1")})
+        }, completion: { finished in })
         
         UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseOut, animations: {
           let translate = CGAffineTransform(translationX: 75, y: -25)
           let translateAndScale = translate.scaledBy(x: 0.5, y: 0.5)
           self.billField.transform = translateAndScale
-        }, completion: { finished in print("TIP VIEW CENTER1 = \(tipResultsViewCenterY)")})
-        
-        print("INITIAL AFT1 POSITION X = \(tipResultsView.center.x)")
-        print("INITIAL AFT1 POSITION Y = \(tipResultsView.center.y)")
-        print("INITIAL AFT1 POSITION FRAME ORIGIN X = \(tipResultsView.frame.origin.x)")
-        print("INITIAL AFT1 POSITION FRAME ORIGIN Y = \(tipResultsView.frame.origin.y)")
-        
+        }, completion: { finished in })
       }
         
       else if numberOfCharacters == 1 && tipResultsViewCenterY < 400 {
-        
-        
+    
         UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseOut, animations: {
           self.tipResultsView.alpha = 0.0
           self.tipResultsView.center.y += offset
-        }, completion: { finished in print("End of amimation1")})
+        }, completion: { finished in })
         
         UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseOut, animations: {
           let translate = CGAffineTransform(translationX: 0, y: 0)
           let translateAndScale = translate.scaledBy(x: 1, y: 1)
           self.billField.transform = translateAndScale
           
-        }, completion: { finished in print("TIP VIEW CENTER2 = \(tipResultsViewCenterY)")})
-        
-        print("INITIAL AFT2 POSITION X = \(tipResultsView.center.x)")
-        print("INITIAL AFT2 POSITION Y = \(tipResultsView.center.y)")
-        print("INITIAL AFT2 POSITION FRAME ORIGIN X = \(tipResultsView.frame.origin.x)")
-        print("INITIAL AFT2 POSITION FRAME ORIGIN Y = \(tipResultsView.frame.origin.y)")
-        
-        
+        }, completion: { finished in })
       }
     }
   }
@@ -137,34 +123,16 @@ class TipViewController: UIViewController {
     billField.becomeFirstResponder()
     billField.text = DataStore.singleton.billAmount
     
-        print("Setting up VIEW POSITION")
-        print("CHAR COUNT = \(billField.text!.characters.count)")
-    
-        // Set tip results view initial position
-        if billField.text!.characters.count == 1 {
-          //tipResultsView.center.y += view.bounds.height
-          tipResultsView.center.x = CGFloat(187.5)
-          tipResultsView.center.y = CGFloat(415)
-    
-          print("INITIAL 1 POSITION X = \(tipResultsView.center.x)")
-          print("INITIAL 1 POSITION Y = \(tipResultsView.center.y)")
-          print("INITIAL 1 POSITION FRAME ORIGIN X = \(tipResultsView.frame.origin.x)")
-          print("INITIAL 1 POSITION FRAME ORIGIN Y = \(tipResultsView.frame.origin.y)")
-    
-    
-        } else {
-          tipResultsView.center.x = CGFloat(187.5)
-          tipResultsView.center.y = CGFloat(215)
-    
-          print("INITIAL 2 POSITION X = \(tipResultsView.center.x)")
-          print("INITIAL 2 POSITION Y = \(tipResultsView.center.y)")
-          print("INITIAL 2 POSITION FRAME ORIGIN X = \(tipResultsView.frame.origin.x)")
-          print("INITIAL 2 POSITION FRAME ORIGIN Y = \(tipResultsView.frame.origin.y)")
-          
-        }
-    
+    // Set tip results view initial position
+    if billField.text!.characters.count == 1 {
+      //tipResultsView.center.y += view.bounds.height
+      tipResultsView.center.x = CGFloat(187.5)
+      tipResultsView.center.y = CGFloat(415)
+    } else {
+      tipResultsView.center.x = CGFloat(187.5)
+      tipResultsView.center.y = CGFloat(215)
+    }
     calculateTip(self)
-    
   }
   
   // This method will be called by UIApplicationDidBecomeActive Notification
@@ -201,7 +169,6 @@ class TipViewController: UIViewController {
     NotificationCenter.default.removeObserver(self,
                                               name: .UIApplicationWillResignActive,
                                               object: nil)
-    
     // preserve billAmount
     DataStore.singleton.billAmount = billField.text!
     
