@@ -37,7 +37,7 @@ GIF created with [LiceCap][1].
 
 Challenges encountered while building the app.
 
-I took me some time to understand UIController lifecycle and decide which methods to use. I run into a problem of screen not refreshing on application wake from background. Solved the problem by adding UIApplicationDidBecomeActive notification observers. Also, I had a problem when attempting to combine two animations. I took some time trying to change CALayer position. In the end I found a proper way to fix the animations without going to CALayer level at all.
+I took me some time to understand UIViewController lifecycle and decide which methods to use. I run into a problem of screen not refreshing on application wake from background. Solved the problem by adding UIApplicationDidBecomeActive notification observers. Also, I had a problem when attempting to combine two animations. I took some time trying to change CALayer position. In the end I found a proper way to fix the animations without going to CALayer level at all.
 
 ## License
 
